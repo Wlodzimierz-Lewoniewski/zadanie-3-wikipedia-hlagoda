@@ -26,8 +26,14 @@ def wiki_artykul(nazwa):
 
         # Adresy URL źródeł (zewnętrzne) (pierwsze 3)
         refs_div = soup.find("div", class_="mw-references-wrap mw-references-columns")
-        refs_a = refs_div.find_all("li")
-        hrefs = [a['href'] for ref in refs_a for span in ref.find_all("span", class_="reference-text") for a in span.find_all("a", href=True) if "http" in a['href']][:3]
+        if refs_div == None:
+            refs_div = soup.find("div", class_="do-not-make-smaller refsection")
+
+        if refs_div != None:
+            refs_a = refs_div.find_all("li")
+            hrefs = [a['href'] for ref in refs_a for span in ref.find_all("span", class_="reference-text") for a in span.find_all("a", href=True) if "http" in a['href']][:3]
+        else:
+            pass
 
         # Nazwy przypisanych kategorii do artykułu (pierwsze 3)
         kat_div = soup.find("div", class_="mw-normal-catlinks")
@@ -65,3 +71,8 @@ def main():
         print("Błąd podczas pobierania strony:", response.status_code)
 
 main()
+
+#   Miasta na prawach powiatu
+#   Państwa członkowskie Unii Europejskiej
+#   Python
+#   Biblioteki Pythona
