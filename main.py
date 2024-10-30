@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-
+import html
 
 def wiki_artykul(nazwa):
 
@@ -42,7 +42,9 @@ def wiki_artykul(nazwa):
         if refs_div != None:
             refs_a = refs_div.find_all("li")
             hrefs = [a['href'] for ref in refs_a for span in ref.find_all("span", class_="reference-text") for a in span.find_all("a", href=True) if "http" in a['href']][:3]
-            hrefs_full = " | ".join(hrefs)
+            
+            hrefs_escaped = [html.escape(href) for href in hrefs]
+            hrefs_full = " | ".join(hrefs_escaped)
         else:
             hrefs_full = ""
 
